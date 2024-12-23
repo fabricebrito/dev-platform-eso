@@ -8,6 +8,14 @@ Add the External Secret Operator helm chart repo:
 helm repo add external-secrets https://charts.external-secrets.io && helm repo update
 ```
 
+## Deployment
+
+Use: 
+
+```
+skaffold dev
+```
+
 ## Where to create secrets
 
 All secrets are created in the namespace `remote-cluster`
