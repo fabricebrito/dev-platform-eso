@@ -1,9 +1,3 @@
-# Apply this if you don't use Terraform
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: {{ .Values.secretsNamespace }}
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -33,12 +27,3 @@ subjects:
 - kind: ServiceAccount
   name: my-remote-sa
   namespace: {{ .Values.secretsNamespace }}
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: secret-one
-  namespace: remote-cluster
-data:
-  the-key: c2VjcmV0LXZhbHVl
-type: Opaque
