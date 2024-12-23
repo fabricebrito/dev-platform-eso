@@ -1,0 +1,7 @@
+secretsNamespace: remote-cluster
+
+targetNamespace: eso-demo
+
+clusterIP: https://192.168.49.2:8443 
+
+secretStoreName: k8s-secret-store

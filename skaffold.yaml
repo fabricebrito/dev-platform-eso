@@ -1,0 +1,19 @@
+apiVersion: skaffold/v4beta9
+kind: Config
+
+deploy:
+  helm:
+    releases:
+      - name: external-secrets
+        remoteChart: external-secrets/external-secrets
+        namespace: external-secrets
+        createNamespace: true
+        wait: true
+
+      # - name: dev-platform-eso
+      #   chartPath: charts
+      #   setValues:
+      #     secretsNamespace: remote-cluster
+      #     targetNamespace: eso-demo
+      #   namespace: eso-demo
+      #   createNamespace: true

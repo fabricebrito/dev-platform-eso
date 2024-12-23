@@ -1,0 +1,35 @@
+# Apply this if you don't use Terraform
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.secretsNamespace }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-remote-sa
+  namespace: {{ .Values.secretsNamespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: {{ .Values.secretsNamespace }}
+  name: eso-secret-reader
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "watch", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: my-remote-rb
+  namespace: {{ .Values.secretsNamespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: eso-secret-reader
+subjects:
+- kind: ServiceAccount
+  name: my-remote-sa
+  namespace: {{ .Values.secretsNamespace }}
