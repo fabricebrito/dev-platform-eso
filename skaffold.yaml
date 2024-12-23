@@ -10,10 +10,10 @@ deploy:
         createNamespace: true
         wait: true
 
-      # - name: dev-platform-eso
-      #   chartPath: charts
-      #   setValues:
-      #     secretsNamespace: remote-cluster
-      #     targetNamespace: eso-demo
-      #   namespace: eso-demo
-      #   createNamespace: true
+      - name: dev-platform-eso
+        chartPath: charts
+        setValues:
+          secretsNamespace: remote-cluster
+          targetNamespace: eso-demo
+        namespace: eso-demo
+        createNamespace: true
