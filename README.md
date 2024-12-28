@@ -1,5 +1,13 @@
 # dev-platform-eso
 
+This repository provides a deployment of the External Secret Operator and a kubernetes secret store.
+
+The kubernetes secret store allows synchronyzing secrets from a namespace to other namespaces when they're requested.
+
+These other namespaces have the label `eso: enabled` to tell the operator that secrets can be synched.
+
+This allows setting all needed secrets in a single namespace acting as a secret store and then "claim" these secrets when needed in other namespaces.
+
 ## Helm repo
 
 Add the External Secret Operator helm chart repo:
@@ -25,6 +33,12 @@ Namespaces where secrets are synched must be labeled:
 ```yaml
 labels:
   eso: enabled
+```
+
+This can be achieved using `kubectl`:
+
+```bash
+kubectl label namespace eso-demo eso=enabled
 ```
 
 ## How to request secrets

@@ -7,9 +7,10 @@ deploy:
       - name: external-secrets
         remoteChart: external-secrets/external-secrets
         namespace: external-secrets
+        setValueTemplates:
+          installCRDs: false
         createNamespace: true
         wait: true
-
       - name: dev-platform-eso
         chartPath: charts
         setValues:
@@ -17,3 +18,32 @@ deploy:
           targetNamespace: eso-demo
         namespace: eso-demo
         createNamespace: true
+        wait: true
+    hooks:
+      before:
+        - host:
+            command: ["sh", "-c", "./get-crds.sh"]
+            os: [darwin, linux]
+      after:
+        - host:
+            command: ["sh", "-c", "./patch-namespace.sh"]
+            os: [darwin, linux]
+profiles:
+  - name: reference
+    deploy:
+      helm:
+        releases:
+          - name: dev-platform-eso
+            chartPath: charts
+            setValues:
+              secretsNamespace: remote-cluster
+              targetNamespace: eso-demo
+            namespace: eso-demo
+            createNamespace: true
+      # - name: dev-platform-eso
+      #   chartPath: charts
+      #   setValues:
+      #     secretsNamespace: remote-cluster
+      #     targetNamespace: eso-demo
+      #   namespace: eso-demo
+      #   createNamespace: true
